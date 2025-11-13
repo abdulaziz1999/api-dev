@@ -1,9 +1,6 @@
 {
   "name": "express",
   "type": "module",
-  "scripts": {
-    "vercel-build": "npm run build"
-  },
   "dependencies": {
     "bcryptjs": "^3.0.3",
     "cors": "^2.8.5",
