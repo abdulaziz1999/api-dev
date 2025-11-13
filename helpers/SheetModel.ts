@@ -1,12 +1,12 @@
 // 📁 helpers/SheetModel.ts
 import dotenv from 'dotenv';
-import fs from 'fs';
 import { google } from 'googleapis';
 import { v4 as uuidv4 } from 'uuid';
 
 dotenv.config();
 
-const key = JSON.parse(fs.readFileSync('credentials.json', 'utf-8'));
+const key = JSON.parse(process.env.GOOGLE_CREDENTIALS || "{}");
+// const key = JSON.parse(fs.readFileSync('credentials.json', 'utf-8'));
 const auth = new google.auth.JWT({
   email: key.client_email,
   key: key.private_key,
