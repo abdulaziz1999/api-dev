@@ -2,14 +2,6 @@ import express from 'express';
 
 const app = express()
 
-// Health check
-// app.get('/health', (_req, res) => {
-//   res.json({ 
-//     success: true, 
-//     message: 'Server is running',
-//     timestamp: new Date().toISOString()
-//   });
-// });
 
 // 404 handler
 // app.use('*', (_req, res) => {
@@ -30,5 +22,14 @@ app.get('/api/users/:id', (_req, res) => {
 app.get('/api/posts/:postId/comments/:commentId', (_req, res) => {
   res.json({ postId: _req.params.postId, commentId: _req.params.commentId })
 })
+
+// Health check
+app.get('/health', (_req, res) => {
+  res.json({
+    success: true, 
+    message: 'Server is running',
+    timestamp: new Date().toISOString()
+  });
+});
 
 export default app
