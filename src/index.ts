@@ -3,14 +3,6 @@ import express from 'express';
 const app = express()
 
 
-// 404 handler
-// app.use('*', (_req, res) => {
-//   res.status(404).json({
-//     success: false,
-//     message: 'Route not found'
-//   });
-// });
-
 app.get('/', (_req, res) => {
   res.send('Hello Express!')
 })
@@ -29,6 +21,14 @@ app.get('/health', (_req, res) => {
     success: true, 
     message: 'Server is running',
     timestamp: new Date().toISOString()
+  });
+});
+
+// 404 handler
+app.use('*', (_req, res) => {
+  res.status(404).json({
+    success: false,
+    message: 'Route not found'
   });
 });
 
