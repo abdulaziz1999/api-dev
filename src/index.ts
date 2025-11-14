@@ -1,8 +1,12 @@
 import express from 'express';
+import { UserController } from '../UserController';
 
 const app = express()
 
-
+app.get('/api/users', UserController.getAllUsers);
+// router.get('/with-relations', UserController.getUsersWithRelations);
+// router.get('/search', UserController.searchUsers);
+// router.get('/advanced', UserController.advancedQuery);
 app.get('/', (_req, res) => {
   res.send('Hello Express!')
 })
