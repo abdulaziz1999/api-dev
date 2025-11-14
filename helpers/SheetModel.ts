@@ -78,12 +78,12 @@ export class SheetModel {
   }
 
   // === BASIC CRUD OPERATIONS ===
-  static async all<T extends SheetModel>(this: new () => T): Promise<T[]> {
+  static async all(this: new () => SheetModel): Promise<RowData[]> {
     const instance = new this();
-    return await instance.fetchData() as T[];
+    return await instance.fetchData();
   }
 
-  static async find<T extends SheetModel>(this: new () => T, id: string): Promise<T | null> {
+  static async find(this: new () => SheetModel, id: string): Promise<RowData | null> {
     const instance = new this();
     const rows = await instance.fetchData();
     return rows.find(row => row.id === id) || null;
@@ -498,14 +498,14 @@ export class SheetModel {
     // Apply queries
     if (this.query.length) {
       data = data.filter(row =>
-        this.query.every(q => this.constructor.compare(row[q.column], q.operator, q.value))
+        this.query.every(q => (this.constructor as typeof SheetModel).compare(row[q.column], q.operator, q.value))
       );
     }
 
     if (this.orQuery.length) {
       const all = await this.fetchData();
       const orFiltered = all.filter(row =>
-        this.orQuery.some(q => this.constructor.compare(row[q.column], q.operator, q.value))
+        this.orQuery.some(q => (this.constructor as typeof SheetModel).compare(row[q.column], q.operator, q.value))
       );
       data = [...new Map([...data, ...orFiltered].map(v => [v.id, v])).values()];
     }
@@ -533,9 +533,10 @@ export class SheetModel {
     // Column selection
     const selected = columns || this.selectedColumns;
     if (selected) {
+      const selArray = Array.isArray(selected) ? selected : [selected];
       data = data.map(row => {
         const obj: RowData = {};
-        selected.forEach(c => (obj[c] = row[c]));
+        selArray.forEach(c => (obj[c] = row[c]));
         return obj;
       });
     }
