@@ -1,5 +1,5 @@
-import { Department } from '../Department';
-import { SheetModel } from '../helpers/SheetModel';
+import { SheetModel } from '../helpers/SheetModel.js';
+import { Department } from '../models/Department.js';
 
 export class User extends SheetModel {
   constructor() {

@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
-import { User } from '../models/User';
-import { Department } from '../models/Department';
+import { User } from '../models/User.js';
 
 export class UserController {
   // GET /users - Get all users with relations
