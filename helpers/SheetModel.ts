@@ -102,7 +102,7 @@ export class SheetModel {
       requestBody: { values: [newRow] },
     });
 
-    return { id, ...data };
+    return { id, ...data } as RowData;
   }
 
   async update(id: string, data: RowData): Promise<RowData | null> {
@@ -498,14 +498,14 @@ export class SheetModel {
     // Apply queries
     if (this.query.length) {
       data = data.filter(row =>
-        this.query.every(q => (this.constructor as typeof SheetModel).compare(row[q.column], q.operator, q.value))
+        this.query.every(q => SheetModel.compare(row[q.column], q.operator, q.value))
       );
     }
 
     if (this.orQuery.length) {
       const all = await this.fetchData();
       const orFiltered = all.filter(row =>
-        this.orQuery.some(q => (this.constructor as typeof SheetModel).compare(row[q.column], q.operator, q.value))
+        this.orQuery.some(q => SheetModel.compare(row[q.column], q.operator, q.value))
       );
       data = [...new Map([...data, ...orFiltered].map(v => [v.id, v])).values()];
     }
@@ -531,9 +531,9 @@ export class SheetModel {
     }
 
     // Column selection
-    const selected = columns || this.selectedColumns;
+    const selected: string | string[] | null = columns || this.selectedColumns;
     if (selected) {
-      const selArray = Array.isArray(selected) ? selected : [selected];
+      const selArray: string[] = Array.isArray(selected) ? selected : [selected];
       data = data.map(row => {
         const obj: RowData = {};
         selArray.forEach(c => (obj[c] = row[c]));
