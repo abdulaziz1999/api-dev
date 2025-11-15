@@ -1,5 +1,6 @@
 import { SheetModel } from '../helpers/SheetModel.js';
 import { Department } from '../models/Department.js';
+import { Role } from './Role.js';
 
 export class User extends SheetModel {
   constructor() {
@@ -11,9 +12,9 @@ export class User extends SheetModel {
     return User.belongsTo(Department, 'department_id', 'id');
   }
 
-  // posts() {
-  //   return User.hasMany(Post, 'user_id', 'id');
-  // }
+  roles() {
+    return User.belongsTo(Role, 'role_id', 'id');
+  }
 
   // profile() {
   //   return User.hasOne(Profile, 'user_id', 'id');
