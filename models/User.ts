@@ -12,7 +12,7 @@ export class User extends SheetModel {
     return User.belongsTo(Department, 'department_id', 'id');
   }
 
-  roles() {
+  role() {
     return User.belongsTo(Role, 'role_id', 'id');
   }
 
