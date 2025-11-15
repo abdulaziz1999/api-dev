@@ -4,7 +4,7 @@ import { UserController } from '../controllers/UserController.js';
 const app = express()
 
 app.get('/api/users', UserController.getAllUsers);
-// router.get('/with-relations', UserController.getUsersWithRelations);
+app.get('/api/users/with-relations', UserController.getUsersWithRelations);
 // router.get('/search', UserController.searchUsers);
 // router.get('/advanced', UserController.advancedQuery);
 app.get('/', (_req, res) => {
