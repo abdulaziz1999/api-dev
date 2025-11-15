@@ -1,6 +1,6 @@
 import { SheetModel } from '../helpers/SheetModel.js';
 import { Department } from '../models/Department.js';
-import { Role } from './Role.js';
+import { Role } from '../models/Role.js';
 
 export class User extends SheetModel {
   constructor() {
