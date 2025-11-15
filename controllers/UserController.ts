@@ -24,7 +24,7 @@ export class UserController {
   static async getUsersWithRelations(req: Request, res: Response) {
     try {
       const users = await new User()
-        .with(['department', 'posts', 'profile'])
+        .with(['department', 'role'])
         .get();
 
       res.json({
