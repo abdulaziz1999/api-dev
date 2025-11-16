@@ -1,23 +1,31 @@
+import cors from 'cors';
 import express from 'express';
-import { UserController } from '../controllers/UserController.js';
+import { AuthController } from '../controllers/AuthController.js';
+import { authenticateToken } from '../middleware/auth.js';
+import router from '../routes/users.js';
 
 const app = express()
 
-app.get('/api/users', UserController.getAllUsers);
-app.get('/api/users/with-relations', UserController.getUsersWithRelations);
-// router.get('/search', UserController.searchUsers);
-// router.get('/advanced', UserController.advancedQuery);
-app.get('/', (_req, res) => {
-  res.send('Hello Express!')
-})
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-app.get('/api/users/:id', (_req, res) => {
-  res.json({ id: _req.params.id })
-})
+app.use('/api/users', router);
 
-app.get('/api/posts/:postId/comments/:commentId', (_req, res) => {
-  res.json({ postId: _req.params.postId, commentId: _req.params.commentId })
-})
+app.post('/api/register', AuthController.register);
+app.post('/api/login', AuthController.login);
+app.post('/api/verify', AuthController.verifyToken);
+app.post('/api/refresh', AuthController.refreshToken);
+app.get('/api/me', authenticateToken, AuthController.getProfile);
+
+
+// app.get('/api/users/:id', (_req, res) => {
+//   res.json({ id: _req.params.id })
+// })
+
+// app.get('/api/posts/:postId/comments/:commentId', (_req, res) => {
+//   res.json({ postId: _req.params.postId, commentId: _req.params.commentId })
+// })
 
 // Health check
 app.get('/health', (_req, res) => {
@@ -35,5 +43,8 @@ app.use((_req, res) => {
     message: 'Route not found'
   });
 });
-
+// const port = process.env.PORT || 3001;
+// app.listen(port, () => {
+//   console.log(`Example app listening on port ${port}`);
+// });
 export default app
