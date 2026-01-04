@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { JWT, JwtPayload } from '../helpers/jwt.js';
 import { AuthRequest } from '../middleware/auth.js';
 import { User } from '../models/User.js';
+import { stat } from 'fs';
 
 // In-memory blacklist untuk token yang di-revoke (opsional, untuk logout)
 // Dalam production, gunakan Redis atau database external
@@ -140,23 +141,26 @@ export class AuthController {
       res.json({
         success: true,
         message: 'Login successful',
+        token: accessToken,
+        statusCode: 200,
         data: {
         //   user: userWithoutPassword,
-          tokens: {
+          // tokens: {
             access_token: accessToken,
             refresh_token: refreshToken,
             access_token_expires_in: 15 * 60, // 15 minutes in seconds
             refresh_token_expires_in: 7 * 24 * 60 * 60, // 7 days in seconds
             access_token_expires_at: JWT.getTokenExpiration(accessToken),
             refresh_token_expires_at: JWT.getTokenExpiration(refreshToken)
-          }
+          // }
         }
       });
     } catch (error: any) {
       console.error('Login error:', error);
       res.status(500).json({
         success: false,
-        message: error.message
+        message: error.message,
+        statusCode: 500
       });
     }
   }
