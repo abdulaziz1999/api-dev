@@ -4,10 +4,10 @@ import { authenticateToken } from '../middleware/auth.js';
 
 const router = Router();
 
-router.post('/api/register', AuthController.register);
-router.post('/api/login', AuthController.login);
-router.post('/api/verify', AuthController.verifyToken);
-router.post('/api/refresh', AuthController.refreshToken);
-router.get('/api/me', authenticateToken, AuthController.getProfile);
+router.post('/register', AuthController.register);
+router.post('/login', AuthController.login);
+router.post('/verify', AuthController.verifyToken);
+router.post('/refresh', AuthController.refreshToken);
+router.get('/me', authenticateToken, AuthController.getProfile);
 
 export default router;
