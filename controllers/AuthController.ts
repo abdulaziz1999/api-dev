@@ -143,6 +143,7 @@ export class AuthController {
         message: 'Login successful',
         token: accessToken,
         statusCode: 200,
+        status: 'success',
         data: {
         //   user: userWithoutPassword,
           // tokens: {
