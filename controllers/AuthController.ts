@@ -448,16 +448,17 @@ export class AuthController {
 
       res.json({
         success: true,
+        message: 'Token is valid',
         valid: !isExpired,
         expired: isExpired,
         token_type: tokenType,
         expires_at: expiresAt,
         time_until_expiration: timeUntilExpiration,
-        user: {
-          userId: payload.userId,
-          email: payload.email,
-          role: payload.role
-        }
+        // user: {
+        //   userId: payload.userId,
+        //   email: payload.email,
+        //   role: payload.role
+        // }
       });
     } catch (error: any) {
       console.error('Token verification error:', error);
